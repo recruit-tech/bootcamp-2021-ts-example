@@ -207,7 +207,7 @@ function createSelectElementDom(item: SelectItem) {
   `;
 }
 
-function createTextAreElementDom(item: TextAreaItem) {
+function createTextAreaElementDom(item: TextAreaItem) {
   return `
     <th><label>${item.label}</label></th>
     <td><textarea placeholder="${item.placeholder}"></textarea></td>
@@ -229,7 +229,7 @@ function createElementDom() {
         case "select":
           return createSelectElementDom(item);
         case "textarea":
-          return createTextAreElementDom(item);
+          return createTextAreaElementDom(item);
         default:
           throw new Error("Found unhandled element.");
       }
