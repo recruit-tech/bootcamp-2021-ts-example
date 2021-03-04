@@ -77,8 +77,123 @@ const items: Item[] = [
   },
 ];
 
+function createRadioElementDom(item: Item) {
+  return `
+    <th>
+      <label>${item.label}</label>
+    </th>
+    <td>
+    ${item.values
+      .map(
+        ({ value, label }) =>
+          `
+          <span class="radioItem">
+            <input
+              type="radio"
+              id="${item.name}${value}"
+              name="${item.name}"
+              value="${value}"
+            />
+            <label for="${item.name}${value}">${label}</label>
+          </span>
+          `
+      )
+      .join("")}
+    </td>
+  `;
+}
+
+function createCheckBoxElementDom(item: Item) {
+  return `
+    <th>
+      <label>${item.label}</label>
+    </th>
+    <td>
+    ${item.values
+      .map(
+        ({ value, label }) =>
+          `
+          <span class="radioItem">
+            <input
+              type="checkbox"
+              id="${item.name}${value}"
+              name="${item.name}"
+              value="${value}"
+            />
+            <label for="${item.name}${value}">${label}</label>
+          </span>
+          `
+      )
+      .join("")}
+    </td>
+  `;
+}
+
+function createInputElementDom(item: Item) {
+  return `
+    <th>
+      <label>${item.label}</label>
+    </th>
+    <td>
+      <input
+        type="${item.type}"
+        name="${item.name}"
+        placeholder="${item.placeholder}"
+      />
+    </td>
+  `;
+}
+
+function createSelectElementDom(item: Item) {
+  return `
+    <th>
+      <label>${item.label}</label>
+    </th>
+    <td>
+      <select name="${item.name}">
+      ${item.options.map(
+        ({ value, text }) => `<option value="${value}">${text}</option>`
+      )}
+      </select>
+    </td>
+  `;
+}
+
+function createTextAreElementDom(item: Item) {
+  return `
+    <th><label>${item.label}</label></th>
+    <td><textarea placeholder="${item.placeholder}"></textarea></td>
+  `;
+}
+
+function createElementDom() {
+  const list = items
+    .map((item) => {
+      switch (item.tagName) {
+        case "input":
+          if (item.type === "radio") {
+            return createRadioElementDom(item);
+          } else if (item.type === "checkbox") {
+            return createCheckBoxElementDom(item);
+          } else {
+            return createInputElementDom(item);
+          }
+        case "select":
+          return createSelectElementDom(item);
+        case "textarea":
+          return createTextAreElementDom(item);
+        default:
+          throw new Error("Found unhandled element.");
+      }
+    })
+    .map((item) => `<tr>${item}</tr>`)
+    .join("");
+  return `<table>${list}</table>`;
+}
+
 function createFormDom() {
   const form = document.getElementById("form");
-  // -> ここからスタート
+  if (!form) throw new Error("Not found form.");
+  form.innerHTML = createElementDom();
 }
 createFormDom();
