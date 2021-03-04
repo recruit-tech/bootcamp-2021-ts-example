@@ -1,12 +1,58 @@
-type Item = {
+type InputTextItem = {
   name: string;
-  tagName: string;
-  type?: string;
   label: string;
-  placeholder?: string;
-  values?: { label: string; value: number }[];
-  options?: { text: string; value: number }[];
+  tagName: "input";
+  type: "text";
+  placeholder: string;
 };
+type InputEmailItem = {
+  name: string;
+  label: string;
+  tagName: "input";
+  type: "email";
+  placeholder: string;
+};
+type InputTelItem = {
+  name: string;
+  label: string;
+  tagName: "input";
+  type: "tel";
+  placeholder: string;
+};
+type InputRadioItem = {
+  name: string;
+  label: string;
+  tagName: "input";
+  type: "radio";
+  values: { label: string; value: number }[];
+};
+type InputCheckBoxItem = {
+  name: string;
+  label: string;
+  tagName: "input";
+  type: "checkbox";
+  values: { label: string; value: number }[];
+};
+type SelectItem = {
+  name: string;
+  label: string;
+  tagName: "select";
+  options: { text: string; value: number }[];
+};
+type TextAreaItem = {
+  name: string;
+  label: string;
+  tagName: "textarea";
+  placeholder: string;
+};
+type Item =
+  | InputTextItem
+  | InputEmailItem
+  | InputTelItem
+  | InputRadioItem
+  | InputCheckBoxItem
+  | SelectItem
+  | TextAreaItem;
 
 const items: Item[] = [
   {
@@ -77,7 +123,7 @@ const items: Item[] = [
   },
 ];
 
-function createRadioElementDom(item: Item) {
+function createRadioElementDom(item: InputRadioItem) {
   return `
     <th>
       <label>${item.label}</label>
@@ -103,7 +149,7 @@ function createRadioElementDom(item: Item) {
   `;
 }
 
-function createCheckBoxElementDom(item: Item) {
+function createCheckBoxElementDom(item: InputCheckBoxItem) {
   return `
     <th>
       <label>${item.label}</label>
@@ -129,7 +175,9 @@ function createCheckBoxElementDom(item: Item) {
   `;
 }
 
-function createInputElementDom(item: Item) {
+function createInputElementDom(
+  item: InputTextItem | InputEmailItem | InputTelItem
+) {
   return `
     <th>
       <label>${item.label}</label>
@@ -144,7 +192,7 @@ function createInputElementDom(item: Item) {
   `;
 }
 
-function createSelectElementDom(item: Item) {
+function createSelectElementDom(item: SelectItem) {
   return `
     <th>
       <label>${item.label}</label>
@@ -159,7 +207,7 @@ function createSelectElementDom(item: Item) {
   `;
 }
 
-function createTextAreElementDom(item: Item) {
+function createTextAreElementDom(item: TextAreaItem) {
   return `
     <th><label>${item.label}</label></th>
     <td><textarea placeholder="${item.placeholder}"></textarea></td>
