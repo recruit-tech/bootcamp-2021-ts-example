@@ -124,124 +124,144 @@ const items: Item[] = [
 ];
 
 function createRadioElementDom(item: InputRadioItem) {
-  return `
-    <th>
-      <label>${item.label}</label>
-    </th>
-    <td>
-    ${item.values
-      .map(
-        ({ value, label }) =>
-          `
-          <span class="radioItem">
-            <input
-              type="radio"
-              id="${item.name}${value}"
-              name="${item.name}"
-              value="${value}"
-            />
-            <label for="${item.name}${value}">${label}</label>
-          </span>
-          `
-      )
-      .join("")}
-    </td>
-  `;
+  const tr = document.createElement("tr");
+  const th = document.createElement("th");
+  const td = document.createElement("td");
+  const label = document.createElement("label");
+  label.innerHTML = item.label;
+  for (const { value, label: _label } of item.values) {
+    const span = document.createElement("span");
+    const input = document.createElement("input");
+    const label = document.createElement("label");
+    input.type = "radio";
+    input.id = `${item.name}${value}`;
+    input.name = item.name;
+    input.value = `${value}`;
+    label.htmlFor = `${item.name}${value}`;
+    label.innerHTML = _label;
+    span.className = "radioItem";
+    span.appendChild(input);
+    span.appendChild(label);
+    td.appendChild(span);
+  }
+  th.appendChild(label);
+  tr.appendChild(th);
+  tr.appendChild(td);
+  return tr;
 }
 
 function createCheckBoxElementDom(item: InputCheckBoxItem) {
-  return `
-    <th>
-      <label>${item.label}</label>
-    </th>
-    <td>
-    ${item.values
-      .map(
-        ({ value, label }) =>
-          `
-          <span class="radioItem">
-            <input
-              type="checkbox"
-              id="${item.name}${value}"
-              name="${item.name}"
-              value="${value}"
-            />
-            <label for="${item.name}${value}">${label}</label>
-          </span>
-          `
-      )
-      .join("")}
-    </td>
-  `;
+  const tr = document.createElement("tr");
+  const th = document.createElement("th");
+  const td = document.createElement("td");
+  const label = document.createElement("label");
+  label.innerHTML = item.label;
+  for (const { value, label: _label } of item.values) {
+    const span = document.createElement("span");
+    const input = document.createElement("input");
+    const label = document.createElement("label");
+    input.type = "checkbox";
+    input.id = `${item.name}${value}`;
+    input.name = item.name;
+    input.value = `${value}`;
+    label.htmlFor = `${item.name}${value}`;
+    label.innerHTML = _label;
+    span.className = "radioItem";
+    span.appendChild(input);
+    span.appendChild(label);
+    td.appendChild(span);
+  }
+  th.appendChild(label);
+  tr.appendChild(th);
+  tr.appendChild(td);
+  return tr;
 }
 
 function createInputElementDom(
   item: InputTextItem | InputEmailItem | InputTelItem
 ) {
-  return `
-    <th>
-      <label>${item.label}</label>
-    </th>
-    <td>
-      <input
-        type="${item.type}"
-        name="${item.name}"
-        placeholder="${item.placeholder}"
-      />
-    </td>
-  `;
+  const tr = document.createElement("tr");
+  const th = document.createElement("th");
+  const td = document.createElement("td");
+  const label = document.createElement("label");
+  const input = document.createElement("input");
+  label.innerHTML = item.label;
+  input.type = item.type;
+  input.name = item.name;
+  input.placeholder = item.placeholder;
+  th.appendChild(label);
+  td.appendChild(input);
+  tr.appendChild(th);
+  tr.appendChild(td);
+  return tr;
 }
 
 function createSelectElementDom(item: SelectItem) {
-  return `
-    <th>
-      <label>${item.label}</label>
-    </th>
-    <td>
-      <select name="${item.name}">
-      ${item.options.map(
-        ({ value, text }) => `<option value="${value}">${text}</option>`
-      )}
-      </select>
-    </td>
-  `;
+  const tr = document.createElement("tr");
+  const th = document.createElement("th");
+  const td = document.createElement("td");
+  const label = document.createElement("label");
+  const select = document.createElement("select");
+  label.innerHTML = item.label;
+  select.name = item.name;
+  for (const { value, text } of item.options) {
+    const option = document.createElement("option");
+    option.value = `${value}`;
+    option.innerHTML = text;
+    select.appendChild(option);
+  }
+  th.appendChild(label);
+  td.appendChild(select);
+  tr.appendChild(th);
+  tr.appendChild(td);
+  return tr;
 }
 
-function createTextAreElementDom(item: TextAreaItem) {
-  return `
-    <th><label>${item.label}</label></th>
-    <td><textarea placeholder="${item.placeholder}"></textarea></td>
-  `;
+function createTextAreaElementDom(item: TextAreaItem) {
+  const tr = document.createElement("tr");
+  const th = document.createElement("th");
+  const td = document.createElement("td");
+  const label = document.createElement("label");
+  const textarea = document.createElement("textarea");
+  label.innerHTML = item.label;
+  textarea.placeholder = item.placeholder;
+  th.appendChild(label);
+  td.appendChild(textarea);
+  tr.appendChild(th);
+  tr.appendChild(td);
+  return tr;
 }
 
-function createElementDom() {
-  const list = items
-    .map((item) => {
-      switch (item.tagName) {
-        case "input":
-          if (item.type === "radio") {
-            return createRadioElementDom(item);
-          } else if (item.type === "checkbox") {
-            return createCheckBoxElementDom(item);
-          } else {
-            return createInputElementDom(item);
-          }
-        case "select":
-          return createSelectElementDom(item);
-        case "textarea":
-          return createTextAreElementDom(item);
-        default:
-          throw new Error("Found unhandled element.");
-      }
-    })
-    .map((item) => `<tr>${item}</tr>`)
-    .join("");
-  return `<table>${list}</table>`;
+function createElementDom(items: Item[]) {
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+  for (const item of items) {
+    switch (item.tagName) {
+      case "input":
+        if (item.type === "radio") {
+          tbody.appendChild(createRadioElementDom(item));
+        } else if (item.type === "checkbox") {
+          tbody.appendChild(createCheckBoxElementDom(item));
+        } else {
+          tbody.appendChild(createInputElementDom(item));
+        }
+        break;
+      case "select":
+        tbody.appendChild(createSelectElementDom(item));
+        break;
+      case "textarea":
+        tbody.appendChild(createTextAreaElementDom(item));
+        break;
+      default:
+        throw new Error("Found unhandled element.");
+    }
+  }
+  table.appendChild(tbody);
+  return table;
 }
-
 function createFormDom() {
   const form = document.getElementById("form");
   if (!form) throw new Error("Not found form.");
-  form.innerHTML = createElementDom();
+  form.appendChild(createElementDom(items));
 }
 createFormDom();
