@@ -113,7 +113,10 @@ const items: Item[] = [
   },
 ];
 
-function createRadioElementDom(item: InputRadioItem) {
+// _____________________________________________________________________________
+//
+
+function createRadioRow(item: InputRadioItem) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   const td = document.createElement("td");
@@ -140,7 +143,7 @@ function createRadioElementDom(item: InputRadioItem) {
   return tr;
 }
 
-function createCheckBoxElementDom(item: InputCheckBoxItem) {
+function createCheckBoxRow(item: InputCheckBoxItem) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   const td = document.createElement("td");
@@ -167,9 +170,7 @@ function createCheckBoxElementDom(item: InputCheckBoxItem) {
   return tr;
 }
 
-function createInputElementDom(
-  item: InputTextItem | InputEmailItem | InputTelItem
-) {
+function createInputRow(item: InputTextItem | InputEmailItem | InputTelItem) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   const td = document.createElement("td");
@@ -186,7 +187,7 @@ function createInputElementDom(
   return tr;
 }
 
-function createSelectElementDom(item: SelectItem) {
+function createSelectRow(item: SelectItem) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   const td = document.createElement("td");
@@ -207,7 +208,7 @@ function createSelectElementDom(item: SelectItem) {
   return tr;
 }
 
-function createTextAreaElementDom(item: TextAreaItem) {
+function createTextAreaRow(item: TextAreaItem) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   const td = document.createElement("td");
@@ -222,25 +223,25 @@ function createTextAreaElementDom(item: TextAreaItem) {
   return tr;
 }
 
-function createElementDom(items: Item[]) {
+function createTable(items: Item[]) {
   const table = document.createElement("table");
   const tbody = document.createElement("tbody");
   for (const item of items) {
     switch (item.tagName) {
       case "input":
         if (item.type === "radio") {
-          tbody.appendChild(createRadioElementDom(item));
+          tbody.appendChild(createRadioRow(item));
         } else if (item.type === "checkbox") {
-          tbody.appendChild(createCheckBoxElementDom(item));
+          tbody.appendChild(createCheckBoxRow(item));
         } else {
-          tbody.appendChild(createInputElementDom(item));
+          tbody.appendChild(createInputRow(item));
         }
         break;
       case "select":
-        tbody.appendChild(createSelectElementDom(item));
+        tbody.appendChild(createSelectRow(item));
         break;
       case "textarea":
-        tbody.appendChild(createTextAreaElementDom(item));
+        tbody.appendChild(createTextAreaRow(item));
         break;
       default:
         throw new Error("Found unhandled element.");
@@ -252,6 +253,6 @@ function createElementDom(items: Item[]) {
 function createFormDom() {
   const form = document.getElementById("form");
   if (!form) throw new Error("Not found form.");
-  form.appendChild(createElementDom(items));
+  form.appendChild(createTable(items));
 }
 createFormDom();
