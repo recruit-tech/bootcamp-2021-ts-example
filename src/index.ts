@@ -123,118 +123,132 @@ const items: Item[] = [
   },
 ];
 
-function createRadioElementDom(item: InputRadioItem) {
+// _____________________________________________________________________________
+//
+
+function createRadioRow(item: InputRadioItem) {
   return `
-    <th>
-      <label>${item.label}</label>
-    </th>
-    <td>
-    ${item.values
-      .map(
-        ({ value, label }) =>
-          `
-          <span class="radioItem">
-            <input
-              type="radio"
-              id="${item.name}${value}"
-              name="${item.name}"
-              value="${value}"
-            />
-            <label for="${item.name}${value}">${label}</label>
-          </span>
-          `
-      )
-      .join("")}
-    </td>
+    <tr>
+      <th>
+        <label>${item.label}</label>
+      </th>
+      <td>
+      ${item.values
+        .map(
+          ({ value, label }) =>
+            `
+            <span class="radioItem">
+              <input
+                type="radio"
+                id="${item.name}${value}"
+                name="${item.name}"
+                value="${value}"
+              />
+              <label for="${item.name}${value}">${label}</label>
+            </span>
+            `
+        )
+        .join("")}
+      </td>
+    </tr>
   `;
 }
 
-function createCheckBoxElementDom(item: InputCheckBoxItem) {
+function createCheckBoxRow(item: InputCheckBoxItem) {
   return `
-    <th>
-      <label>${item.label}</label>
-    </th>
-    <td>
-    ${item.values
-      .map(
-        ({ value, label }) =>
-          `
-          <span class="radioItem">
-            <input
-              type="checkbox"
-              id="${item.name}${value}"
-              name="${item.name}"
-              value="${value}"
-            />
-            <label for="${item.name}${value}">${label}</label>
-          </span>
-          `
-      )
-      .join("")}
-    </td>
+    <tr>
+      <th>
+        <label>${item.label}</label>
+      </th>
+      <td>
+      ${item.values
+        .map(
+          ({ value, label }) =>
+            `
+            <span class="radioItem">
+              <input
+                type="checkbox"
+                id="${item.name}${value}"
+                name="${item.name}"
+                value="${value}"
+              />
+              <label for="${item.name}${value}">${label}</label>
+            </span>
+            `
+        )
+        .join("")}
+      </td>
+    </tr>
   `;
 }
 
-function createInputElementDom(
-  item: InputTextItem | InputEmailItem | InputTelItem
-) {
+function createInputRow(item: InputTextItem | InputEmailItem | InputTelItem) {
   return `
-    <th>
-      <label>${item.label}</label>
-    </th>
-    <td>
-      <input
-        type="${item.type}"
-        name="${item.name}"
-        placeholder="${item.placeholder}"
-      />
-    </td>
+    <tr>
+      <th>
+        <label>${item.label}</label>
+      </th>
+      <td>
+        <input
+          type="${item.type}"
+          name="${item.name}"
+          placeholder="${item.placeholder}"
+        />
+      </td>
+    </tr>
   `;
 }
 
-function createSelectElementDom(item: SelectItem) {
+function createSelectRow(item: SelectItem) {
   return `
-    <th>
-      <label>${item.label}</label>
-    </th>
-    <td>
-      <select name="${item.name}">
-      ${item.options.map(
-        ({ value, text }) => `<option value="${value}">${text}</option>`
-      )}
-      </select>
-    </td>
+    <tr>
+      <th>
+        <label>${item.label}</label>
+      </th>
+      <td>
+        <select name="${item.name}">
+        ${item.options.map(
+          ({ value, text }) => `<option value="${value}">${text}</option>`
+        )}
+        </select>
+      </td>
+    </tr>
   `;
 }
 
-function createTextAreaElementDom(item: TextAreaItem) {
+function createTextAreaRow(item: TextAreaItem) {
   return `
-    <th><label>${item.label}</label></th>
-    <td><textarea placeholder="${item.placeholder}"></textarea></td>
+    <tr>
+      <th>
+        <label>${item.label}</label>
+      </th>
+      <td>
+        <textarea placeholder="${item.placeholder}"></textarea>
+      </td>
+    </tr>
   `;
 }
 
-function createElementDom() {
+function createTable() {
   const list = items
     .map((item) => {
       switch (item.tagName) {
         case "input":
           if (item.type === "radio") {
-            return createRadioElementDom(item);
+            return createRadioRow(item);
           } else if (item.type === "checkbox") {
-            return createCheckBoxElementDom(item);
+            return createCheckBoxRow(item);
           } else {
-            return createInputElementDom(item);
+            return createInputRow(item);
           }
         case "select":
-          return createSelectElementDom(item);
+          return createSelectRow(item);
         case "textarea":
-          return createTextAreaElementDom(item);
+          return createTextAreaRow(item);
         default:
           throw new Error("Found unhandled element.");
       }
     })
-    .map((item) => `<tr>${item}</tr>`)
     .join("");
   return `<table>${list}</table>`;
 }
@@ -242,6 +256,6 @@ function createElementDom() {
 function createFormDom() {
   const form = document.getElementById("form");
   if (!form) throw new Error("Not found form.");
-  form.innerHTML = createElementDom();
+  form.innerHTML = createTable();
 }
 createFormDom();
