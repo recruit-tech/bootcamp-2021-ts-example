@@ -1,11 +1,9 @@
-# bootcamp-2021-ts
+# お題： 配列「items」から Form を動的に作成してください
 
-お題： 配列「items」から TypeScript で Form を動的に作成してください
-
-- 配列はループを使って処理すること
-- 配列は「Item 型」と互換性のある Object が受け入れられる様にすること
+- src/index.ts ファイルに記載されている関数を利用すること
 - 配列「items」は改変しないこと
-- 「Item 型」は改変しても構わない
+- 関数は追加しても構わない
+- 型定義「Item」は改変しても構わない
 
 ### 配列 items
 
@@ -97,3 +95,10 @@ type Item = {
 ### 完成イメージ
 
 <img src="./image.png" width="924" alt="完成イメージ" />
+
+### 早く解けたひと向け
+
+文字列ではなく、DOM API を使って table を構築してみよう。
+
+参考：Document.createElement()  
+https://developer.mozilla.org/ja/docs/Web/API/Document/createElement
