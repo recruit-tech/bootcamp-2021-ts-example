@@ -77,8 +77,68 @@ const items: Item[] = [
   },
 ];
 
+// _____________________________________________________________________________
+//
+
+function createInputRow(item: Item) {
+  return `
+    <tr>
+      <th>
+        <label></label>
+      </th>
+      <td>
+        <input />
+      </td>
+    </tr>
+  `;
+}
+
+function createSelectRow(item: Item) {
+  return `
+    <tr>
+      <th>
+        <label></label>
+      </th>
+      <td>
+        <select>
+        </select>
+      </td>
+    </tr>
+  `;
+}
+
+function createTextAreaRow(item: Item) {
+  return `
+    <tr>
+      <th>
+        <label></label>
+      </th>
+      <td>
+        <textarea></textarea>
+      </td>
+    </tr>
+  `;
+}
+
+function createTable() {
+  const list = items
+    .map((item) => {
+      switch (item.tagName) {
+        case "input":
+          return createInputRow(item);
+        case "select":
+          return createSelectRow(item);
+        case "textarea":
+          return createTextAreaRow(item);
+      }
+    })
+    .join("");
+  return `<table>${list}</table>`;
+}
+
 function createFormDom() {
   const form = document.getElementById("form");
-  // -> ここからスタート
+  form.innerHTML = createTable();
 }
+
 createFormDom();
