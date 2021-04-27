@@ -123,7 +123,7 @@ function createCheckBoxRow(item: Item) {
               <input
                 type="checkbox"
                 id="${item.name}${value}"
-                name="${item.name}"
+                name="${item.name}${value}"
                 value="${value}"
               />
               <label for="${item.name}${value}">${label}</label>
