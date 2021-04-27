@@ -152,7 +152,7 @@ function createCheckBoxRow(item: InputCheckBoxItem) {
     const label = document.createElement("label");
     input.type = "checkbox";
     input.id = `${item.name}${value}`;
-    input.name = item.name;
+    input.name = `${item.name}${value}`;
     input.value = `${value}`;
     label.htmlFor = `${item.name}${value}`;
     label.innerHTML = _label;
