@@ -130,7 +130,7 @@ function createRadioRow(item: InputRadioItem) {
   return `
     <tr>
       <th>
-        <label>${item.label}</label>
+        ${item.label}
       </th>
       <td>
       ${item.values
@@ -158,7 +158,7 @@ function createCheckBoxRow(item: InputCheckBoxItem) {
   return `
     <tr>
       <th>
-        <label>${item.label}</label>
+        ${item.label}
       </th>
       <td>
       ${item.values
@@ -186,7 +186,7 @@ function createInputRow(item: InputTextItem | InputEmailItem | InputTelItem) {
   return `
     <tr>
       <th>
-        <label>${item.label}</label>
+        ${item.label}
       </th>
       <td>
         <input
@@ -203,7 +203,7 @@ function createSelectRow(item: SelectItem) {
   return `
     <tr>
       <th>
-        <label>${item.label}</label>
+        ${item.label}
       </th>
       <td>
         <select name="${item.name}">
@@ -220,7 +220,7 @@ function createTextAreaRow(item: TextAreaItem) {
   return `
     <tr>
       <th>
-        <label>${item.label}</label>
+        ${item.label}
       </th>
       <td>
         <textarea placeholder="${item.placeholder}"></textarea>
