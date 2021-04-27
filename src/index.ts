@@ -120,8 +120,7 @@ function createRadioRow(item: InputRadioItem) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   const td = document.createElement("td");
-  const label = document.createElement("label");
-  label.innerHTML = item.label;
+  th.innerHTML = item.label;
   for (const { value, label: _label } of item.values) {
     const span = document.createElement("span");
     const input = document.createElement("input");
@@ -137,7 +136,6 @@ function createRadioRow(item: InputRadioItem) {
     span.appendChild(label);
     td.appendChild(span);
   }
-  th.appendChild(label);
   tr.appendChild(th);
   tr.appendChild(td);
   return tr;
@@ -147,8 +145,7 @@ function createCheckBoxRow(item: InputCheckBoxItem) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   const td = document.createElement("td");
-  const label = document.createElement("label");
-  label.innerHTML = item.label;
+  th.innerHTML = item.label;
   for (const { value, label: _label } of item.values) {
     const span = document.createElement("span");
     const input = document.createElement("input");
@@ -164,7 +161,6 @@ function createCheckBoxRow(item: InputCheckBoxItem) {
     span.appendChild(label);
     td.appendChild(span);
   }
-  th.appendChild(label);
   tr.appendChild(th);
   tr.appendChild(td);
   return tr;
@@ -174,13 +170,11 @@ function createInputRow(item: InputTextItem | InputEmailItem | InputTelItem) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   const td = document.createElement("td");
-  const label = document.createElement("label");
   const input = document.createElement("input");
-  label.innerHTML = item.label;
+  th.innerHTML = item.label;
   input.type = item.type;
   input.name = item.name;
   input.placeholder = item.placeholder;
-  th.appendChild(label);
   td.appendChild(input);
   tr.appendChild(th);
   tr.appendChild(td);
@@ -191,9 +185,8 @@ function createSelectRow(item: SelectItem) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   const td = document.createElement("td");
-  const label = document.createElement("label");
   const select = document.createElement("select");
-  label.innerHTML = item.label;
+  th.innerHTML = item.label;
   select.name = item.name;
   for (const { value, text } of item.options) {
     const option = document.createElement("option");
@@ -201,7 +194,6 @@ function createSelectRow(item: SelectItem) {
     option.innerHTML = text;
     select.appendChild(option);
   }
-  th.appendChild(label);
   td.appendChild(select);
   tr.appendChild(th);
   tr.appendChild(td);
@@ -212,11 +204,9 @@ function createTextAreaRow(item: TextAreaItem) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   const td = document.createElement("td");
-  const label = document.createElement("label");
   const textarea = document.createElement("textarea");
-  label.innerHTML = item.label;
+  th.innerHTML = item.label;
   textarea.placeholder = item.placeholder;
-  th.appendChild(label);
   td.appendChild(textarea);
   tr.appendChild(th);
   tr.appendChild(td);
