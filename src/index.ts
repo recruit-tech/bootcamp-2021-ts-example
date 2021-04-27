@@ -84,7 +84,6 @@ function createInputRow(item: Item) {
   return `
     <tr>
       <th>
-        <label></label>
       </th>
       <td>
         <input />
@@ -97,7 +96,6 @@ function createSelectRow(item: Item) {
   return `
     <tr>
       <th>
-        <label></label>
       </th>
       <td>
         <select>
@@ -111,7 +109,6 @@ function createTextAreaRow(item: Item) {
   return `
     <tr>
       <th>
-        <label></label>
       </th>
       <td>
         <textarea></textarea>
